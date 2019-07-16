@@ -19,7 +19,11 @@ public class Bid {
 
   @NotNull
   @Column(nullable = false)
-  private BigDecimal bidAmount;
+  private BigDecimal currentBidAmount;
+
+  @NotNull
+  @Column(nullable = false)
+  private BigDecimal maxAutoBidAmount;
 
   //one to one between bid & user
 
