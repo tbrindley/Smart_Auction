@@ -13,7 +13,7 @@ import lombok.Setter;
 public class AuctionItems {
   private Set<AuctionItem> data;
   private int elapseTimeMillis;
-  private int itemsPerPage;
+  private int itemsPerPage = 10;
   private int page;
   private int totalItems;
   private int totalPages;

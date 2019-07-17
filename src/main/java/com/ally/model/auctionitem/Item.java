@@ -10,23 +10,27 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Item {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id", updatable = false, nullable = false)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id")
   private long id;
 
   @NotNull
@@ -35,14 +39,14 @@ public class Item {
   private String itemId;
 
   @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
-  @JoinColumn(name = "itemDescription_id")
+  @JoinColumn(name = "id")
   ItemDescription itemDescription;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "item")
+  @OneToOne(mappedBy = "item")
   private AuctionItem auctionItem;
 
   @Enumerated(EnumType.STRING)
+  @Column
   private Status status;
 
 }

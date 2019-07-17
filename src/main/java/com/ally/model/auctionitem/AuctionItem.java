@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -37,8 +39,8 @@ public class AuctionItem {
   private BigDecimal reservePrice;
 
   @NotNull
-  @Column(nullable = false)
-  @OneToOne(mappedBy = "item_id", fetch = FetchType.LAZY, optional = false)
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id")
   private Item item;
 
   @CreationTimestamp
