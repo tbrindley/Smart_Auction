@@ -39,6 +39,11 @@
       <artifactId>spring-cloud-starter-config</artifactId>
       <version>1.2.1.RELEASE</version>
     </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<version>1.2.1.RELEASE</version>
+		</dependency>
 
 		<!-- Database / Hibernate -->
 		<dependency>
