@@ -8,10 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -29,8 +27,6 @@ import lombok.Setter;
 public class Item {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
   private long id;
 
   @NotNull
@@ -39,11 +35,8 @@ public class Item {
   private String itemId;
 
   @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
-  @JoinColumn(name = "id")
+  @MapsId
   ItemDescription itemDescription;
-
-  @OneToOne(mappedBy = "item")
-  private AuctionItem auctionItem;
 
   @Enumerated(EnumType.STRING)
   @Column

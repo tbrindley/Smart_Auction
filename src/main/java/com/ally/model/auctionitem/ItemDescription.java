@@ -32,8 +32,4 @@ public class ItemDescription {
   @Column(nullable = false)
   @Size(max = 2048)
   private String description;
-
-  @OneToOne(mappedBy = "itemDescription")
-  private Item item;
-
 }

@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -23,7 +24,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "Auction_Item")
 @AllArgsConstructor
 @Getter
 @Setter
@@ -31,8 +31,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class AuctionItem {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id", updatable = false, nullable = false)
   private long id;
 
   @NotNull
@@ -40,7 +38,7 @@ public class AuctionItem {
 
   @NotNull
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "id")
+  @MapsId
   private Item item;
 
   @CreationTimestamp

@@ -9,7 +9,7 @@ public interface ItemService {
 
   ResponseEntity<Item> addItem(Item item);
 
-  ResponseEntity<String> deleteItem(long id);
+  ResponseEntity<String> deleteItem(long id) throws RecordNotFoundException;
 
   ResponseEntity<Item> getItem(long id) throws RecordNotFoundException;
 }

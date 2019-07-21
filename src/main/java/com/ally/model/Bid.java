@@ -1,12 +1,14 @@
 package com.ally.model;
 
+import com.ally.model.auctionitem.AuctionItem;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,8 +17,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Bid {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id", updatable = false, nullable = false)
   private long id;
 
   @NotNull
@@ -27,9 +27,13 @@ public class Bid {
   @Column(nullable = false)
   private BigDecimal maxAutoBidAmount;
 
-  //one to one between bid & user
+  //one to one between bid & user eventually
+  @NotNull
+  private String user;
 
-  //one to one between bid & item
+  @OneToOne(fetch = FetchType.LAZY)
+  @PrimaryKeyJoinColumn(name = "id")
+  private AuctionItem auctionItem;
 
   @CreationTimestamp
   @Column(nullable = false)
