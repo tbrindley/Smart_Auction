@@ -18,9 +18,7 @@ import org.springframework.stereotype.Service;
 public class ItemServiceImpl implements ItemService {
 
   @Autowired
-  ItemRepository itemRepository;
-  @Autowired
-  ItemDescriptionRepository itemDescriptionRepository;
+  private ItemRepository itemRepository;
 
   private static final Logger logger = LoggerFactory.getLogger(ItemServiceImpl.class);
 

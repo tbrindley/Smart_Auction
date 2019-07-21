@@ -27,12 +27,12 @@ public class ItemController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Item> getItem(@PathVariable long id) throws RecordNotFoundException {
+  public ResponseEntity<Item> getItem(@PathVariable("id") long id) throws RecordNotFoundException {
     return itemService.getItem(id);
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<String> deleteItem(@PathVariable long id) throws RecordNotFoundException {
+  public ResponseEntity<String> deleteItem(@PathVariable("id") long id) throws RecordNotFoundException {
     return itemService.deleteItem(id);
   }
 }

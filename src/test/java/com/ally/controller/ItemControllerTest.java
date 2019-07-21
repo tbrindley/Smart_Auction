@@ -1,14 +1,13 @@
 package com.ally.controller;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.ally.model.auctionitem.Item;
 import com.ally.model.auctionitem.ItemDescription;
 import com.ally.model.auctionitem.Status;
-import com.ally.service.impl.ItemServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,15 +15,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ItemControllerTest {
-
-  @Mock
-  private ItemServiceImpl itemService;
 
   @Mock
   private ItemController itemController;
@@ -47,8 +42,6 @@ public class ItemControllerTest {
 
     String jsonString = objectMapper.writeValueAsString(mockItem);
 
-    when(itemService.addItem(mock(Item.class))).thenReturn(mock(ResponseEntity.class));
-
     mockMvc.perform(post("/item")
         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
         .content(jsonString))
@@ -56,20 +49,34 @@ public class ItemControllerTest {
   }
 
   @Test
-  public void whenReceivingAnInvalidRequestToCraeteAnItemAndReturnsA400Response() throws Exception {
-    when(itemService.addItem(mock(Item.class))).thenReturn(mock(ResponseEntity.class));
-
+  public void whenReceivingAnInvalidRequestToCreateAnItemAndReturnsA400Response() throws Exception {
     mockMvc.perform(post("/item")
         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
         .content("INVALIDREQUEST"))
         .andExpect(status().isBadRequest());
   }
-  //successful get request
 
-  //invalid get request
+  @Test
+  public void whenReceivingAValidGetRequestThatReturnsA200Response() throws Exception {
+    mockMvc.perform(get("/item/{id}", 1))
+        .andExpect(status().isOk());
+  }
 
-  //successful delete request
+  @Test
+  public void whenReceivingAnInvalidGetRequestThatReturnsA400Response() throws Exception {
+    mockMvc.perform(get("/item/{id}", "IM A BAD REQUEST"))
+        .andExpect(status().isBadRequest());
+  }
 
-  //invalid delete request
+  @Test
+  public void whenReceivingAValidDeleteRequestThatReturnsA200Response() throws Exception {
+    mockMvc.perform(delete("/item/{id}", 1))
+        .andExpect(status().isOk());
+  }
 
+  @Test
+  public void whenReceivingAnInvalidDeleteRequestThatReturnsA400Response() throws Exception {
+    mockMvc.perform(delete("/item/{id}", "IM A BAD REQUEST"))
+        .andExpect(status().isBadRequest());
+  }
 }
