@@ -1,5 +1,6 @@
 package com.ally.model.auctionitem;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -39,6 +40,7 @@ public class AuctionItem {
   @NotNull
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   private Item item;
 
   @CreationTimestamp

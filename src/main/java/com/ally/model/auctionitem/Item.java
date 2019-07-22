@@ -1,5 +1,6 @@
 package com.ally.model.auctionitem;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -36,6 +37,7 @@ public class Item {
 
   @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
   @MapsId
+  @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   ItemDescription itemDescription;
 
   @Enumerated(EnumType.STRING)

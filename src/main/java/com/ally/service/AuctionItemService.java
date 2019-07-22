@@ -7,6 +7,7 @@ import com.ally.model.auctionitem.AuctionItem;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 
+
 public interface AuctionItemService {
 
   ResponseEntity<AuctionItem> getAuctionItem(long id) throws RecordNotFoundException;

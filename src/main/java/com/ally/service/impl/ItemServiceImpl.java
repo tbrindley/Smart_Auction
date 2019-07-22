@@ -3,7 +3,6 @@ package com.ally.service.impl;
 import com.ally.exception.RecordNotFoundException;
 import com.ally.model.auctionitem.Item;
 import com.ally.model.auctionitem.Status;
-import com.ally.repository.ItemDescriptionRepository;
 import com.ally.repository.ItemRepository;
 import com.ally.service.ItemService;
 import java.util.Optional;
@@ -24,15 +23,17 @@ public class ItemServiceImpl implements ItemService {
 
   @Override
   public ResponseEntity<Item> addItem(Item item) {
-
-    logger.info("Saving Item: " + item.getItemId());
+    long startTime = System.currentTimeMillis();
+    logger.info("Saving Item: {}", item.getItemId());
     Item savedItem = itemRepository.save(item);
-    logger.info("SUCCESSFULLY SAVED: " + savedItem.getId());
+    long elapsedTime = System.currentTimeMillis() - startTime;
+    logger.info("Successfully saved item: {} in {} ms", savedItem.getId(), elapsedTime);
     return new ResponseEntity<>(savedItem, HttpStatus.OK);
   }
 
   @Override
   public ResponseEntity<String> deleteItem(long id) throws RecordNotFoundException {
+    long startTime = System.currentTimeMillis();
     logger.info("Searching for Item Id:  " + id);
     Optional<Item> item = itemRepository.findById(id);
 
@@ -40,24 +41,26 @@ public class ItemServiceImpl implements ItemService {
       Item retreivedItem = item.get();
       retreivedItem.setStatus(Status.DELETED);
       itemRepository.save(retreivedItem);
-      logger.info("SUCCESSFULLY DELETED: " + retreivedItem.getId());
+      long elapsedTime = System.currentTimeMillis() - startTime;
+      logger.info("Successfully Deleted item: {} in {} ms" + retreivedItem.getId(), elapsedTime);
 
       return new ResponseEntity<>("Item was successfully deleted", HttpStatus.OK);
     }
+    logger.warn("Item {} was not found", id);
     throw new RecordNotFoundException(id, "Item");
   }
 
   @Override
   public ResponseEntity<Item> getItem(long id) throws RecordNotFoundException {
-    logger.info("Searching for ITEM ID:  " + id);
+    long startTime = System.currentTimeMillis();
+    logger.info("Getting item: {} ", id);
     Optional<Item> item = itemRepository.findById(id);
-
     if (item.isPresent()) {
-      Item retreivedItem = item.get();
-      logger.info("SUCCESSFULLY RETRIEVED: " + retreivedItem.getId());
-
-      return new ResponseEntity<>(retreivedItem, HttpStatus.OK);
+      long elapsedTime = System.currentTimeMillis() - startTime;
+      logger.info("Successfully Retrieved item: {} in {} ms", id, elapsedTime);
+      return new ResponseEntity<>(item.get(), HttpStatus.OK);
     } else {
+      logger.warn("Item {} was not found.", id);
       throw new RecordNotFoundException(id, "Item");
     }
   }
