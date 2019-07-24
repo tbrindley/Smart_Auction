@@ -1,6 +1,8 @@
 package com.ally.model.auctionitem;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,6 +20,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Getter
@@ -28,17 +32,32 @@ import lombok.Setter;
 public class Item {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
   @NotNull
   @Column(nullable = false)
   @Size(max = 64)
-  private String itemId;
+  private String itemName;
+
+  @NotNull
+  @Column
+  private BigDecimal reservePrice;
+
+  @NotNull
+  @Column
+  private BigDecimal currentPrice;
 
   @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
   @MapsId
   @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
   ItemDescription itemDescription;
+
+  @CreationTimestamp
+  private LocalDateTime createDateTime;
+
+  @UpdateTimestamp
+  private LocalDateTime updateDateTime;
 
   @Enumerated(EnumType.STRING)
   @Column

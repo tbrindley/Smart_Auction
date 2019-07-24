@@ -35,7 +35,7 @@ public class ItemControllerTest {
   @Test
   public void whenReceivingASuccessfulItemRequestAndReturnsA200Response() throws Exception {
     Item mockItem = Item.builder()
-        .itemId("itemID")
+        .itemName("itemName")
         .itemDescription(new ItemDescription())
         .status(Status.ACTIVE)
         .build();

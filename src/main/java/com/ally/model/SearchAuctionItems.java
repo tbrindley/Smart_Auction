@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 public class SearchAuctionItems {
 
-  List<String> names;
+  String name;
 
   BigDecimal minReserveAmount;
 

@@ -4,6 +4,7 @@ import com.ally.exception.RecordNotFoundException;
 import com.ally.model.auctionitem.Item;
 import com.ally.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/item")
+@RequestMapping("/auction-items")
 public class ItemController {
 
   @Autowired
@@ -24,6 +25,11 @@ public class ItemController {
   @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<Item> createItem(@RequestBody Item item) {
     return itemService.addItem(item);
+  }
+
+  @GetMapping(value = "/search", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResponseEntity<Page<Item>> getItems(){
+    return itemService.searchItems();
   }
 
   @GetMapping("/{id}")
